@@ -6,7 +6,6 @@ pipeline {
         echo 'Start Testing'
         sh 'node -v'
         echo 'Install'
-        sh 'npm install'
       }
     }
 
