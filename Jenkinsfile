@@ -5,7 +5,6 @@ pipeline {
       steps {
         echo 'Start Testing'
         sh 'node -v'
-        sh 'npm prune'
         echo 'Install'
         sh 'npm install'
       }
