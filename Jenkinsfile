@@ -25,7 +25,6 @@ pipeline {
         stage('Deploy master') {
           when {
             branch 'master'
-            environment name: 'IS_PULL_REQUEST', value: 'false'
           }
           steps {
             echo 'Push to Repo'
@@ -38,7 +37,6 @@ pipeline {
         stage('Deploy develop') {
           when {
             branch 'develop'
-            environment name: 'IS_PULL_REQUEST', value: 'false'
           }
           steps {
             echo 'Push to Repo'
