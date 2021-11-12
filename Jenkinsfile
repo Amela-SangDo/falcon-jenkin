@@ -1,6 +1,17 @@
 pipeline {
   agent any
+  environment {
+    PROJECT_NAME = "JENKIN FALCON"
+    EMAIL = "${env.BRANCH_NAME == 'master' ? 'sang.do@amela.vn' : 'taobietladu@gmail.com'}"
+  }
   stages {
+    stage('Before test stage') {
+      steps {
+        echo "The build number is ${env.BUILD_NUMBER}"
+        echo "Project name: ${env.PROJECT_NAME}"
+        echo "Email notification: ${env.EMAIL}"
+      }
+    }
     stage('Testing Stage') {
       steps {
         echo 'Start Testing'
@@ -14,6 +25,7 @@ pipeline {
         stage('Deploy master') {
           when {
             branch 'master'
+            environment name: 'IS_PULL_REQUEST', value: 'true'
           }
           steps {
             echo 'Push to Repo'
@@ -26,6 +38,7 @@ pipeline {
         stage('Deploy develop') {
           when {
             branch 'develop'
+            environment name: 'IS_PULL_REQUEST', value: 'true'
           }
           steps {
             echo 'Push to Repo'
@@ -39,7 +52,7 @@ pipeline {
       steps {
         echo 'prune and cleanup'
         sh 'rm node_modules -rf'
-        mail(body: 'project build successful', from: 'falcon@dev.com', subject: 'project build successful', to: 'taobietladu@gmail.com')
+        mail(body: 'project build successful', from: 'falcon@dev.com', subject: "B&D ${env.PROJECT_NAME} successfully!", to: "${env.EMAIL}")
       }
     }
   }
